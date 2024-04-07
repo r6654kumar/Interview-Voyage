@@ -11,7 +11,7 @@ const RegisterPage = () => {
 
     })
     if (response.status === 200)
-      alert("Registration Successfull")
+      alert("Registration Successfull! You may now Login")
     else
       alert("Registration failed! Username already exists.Try with a different Username");
   }
