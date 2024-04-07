@@ -36,7 +36,10 @@ app.post('/login', async (request, response) => {
                 if (err)
                     throw err
                 else
-                    response.cookie('token', token).send(token);
+                    response.cookie('token', token).json({
+                        id:userDoc._id,
+                        userName,
+                    });
             })
             // response.status(200).send("Success");
         } else {

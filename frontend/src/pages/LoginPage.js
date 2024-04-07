@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
+import {UserContext} from '../UserContext';
 import {Navigate} from 'react-router-dom'
 const LoginPage = () => {
   const [userName,setUserName]=useState('');
   const [password,setPassword]=useState('');
   const [redirect,setRedirect]=useState(false);
+  const {setUserInfo}=useContext(UserContext);
   async function login(ev){
     ev.preventDefault();
     const response=await fetch('http://localhost:4000/login', {
@@ -13,13 +15,16 @@ const LoginPage = () => {
       credentials:'include'
     })
     if(response.status===200){
-      alert("Success");
+      alert("Successfully Logged in");
+      response.json().then(userInfo=>{
+        setUserInfo(userInfo);
+      })
       setRedirect(true);
     }
     else
       alert("Invalid Credentials");
     }
-    if(setRedirect)
+    if(redirect)
       return <Navigate to={'/'} />
     return (
     <form className='login' onSubmit={login}>
