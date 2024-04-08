@@ -63,7 +63,7 @@ app.get('/profile',(request,response)=>{
     const {token}=request.cookies;
     jwt.verify(token,secret,{},(err,info)=>{
         if(err)
-            throw err
+            response.json(err);
         else
             response.json(info)
     })
