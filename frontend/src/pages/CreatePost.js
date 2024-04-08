@@ -36,11 +36,11 @@ const CreatePost = () => {
         Share your Interview experience and help others ace their preperation 👩🏻‍💻
    </div>
    <form onSubmit={createNewPost}>
-        <input type="text" placeholder={'Title'} 
+        <input type="text" placeholder={'Enter title for exmple: Interview Experience @ Company Name or Interview Experience for @ Position'} 
         value={title} 
         onChange={ev=>setTitle(ev.target.value)}
         />
-        <input type="summary" placeholder={'Summary'}
+        <input type="summary" placeholder={'Give a summary of your experience such as Positive / Negative Experience , CTC offered, On campus/ Off Campus, Selected/ Not Selected , Position appled for etc..'}
         value={summary}
         onChange={ev=>setSummary(ev.target.value)}
         />
@@ -49,6 +49,7 @@ const CreatePost = () => {
         onChange={ev=>setFiles(ev.target.files)}
         />
         <ReactQuill className='quill'
+            placeholder={'Upload image/logo of the company you interviewed in or any relevant image in the above space provided. Enter your Interview Experience in details here. Warning : DO NOT INCLUDE ANY CONFIDENTIAL DATA OR INVOLVE IN PIRACY.'}
             value={content}
             onChange={newValue=>setContent(newValue)}
         ></ReactQuill>
