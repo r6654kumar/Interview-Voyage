@@ -18,7 +18,7 @@ const PORT = process.env.PORT
 const MONGODBURL = process.env.MONGODBURL
 const secret = process.env.secret
 const app = express();
-app.use(cors({credentials :true, origin:'http://localhost:3000'}));
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(join(__dirname, 'uploads')));
@@ -45,7 +45,7 @@ app.post('/login', async (request, response) => {
                     throw err
                 else
                     response.cookie('token', token).json({
-                        id:userDoc._id,
+                        id: userDoc._id,
                         userName,
                     });
             })
@@ -59,10 +59,10 @@ app.post('/login', async (request, response) => {
 })
 
 //Profile Route
-app.get('/profile',(request,response)=>{
-    const {token}=request.cookies;
-    jwt.verify(token,secret,{},(err,info)=>{
-        if(err)
+app.get('/profile', (request, response) => {
+    const { token } = request.cookies;
+    jwt.verify(token, secret, {}, (err, info) => {
+        if (err)
             response.json(err);
         else
             response.json(info)
@@ -71,32 +71,32 @@ app.get('/profile',(request,response)=>{
 
 
 //Logout Route
-app.post('/logout', (request,response)=>{
-    response.cookie('token','').send("ok");
+app.post('/logout', (request, response) => {
+    response.cookie('token', '').send("ok");
 })
 
 //Upload Middleware
 
-const uploadMiddleware=multer({dest:'uploads/'})
+const uploadMiddleware = multer({ dest: 'uploads/' })
 
 //Create Post route
-app.post('/post',uploadMiddleware.single('file'),(request,response)=>{
-    const {originalname,path}=request.file;
-    const parts=originalname.split('.');
-    const ext=parts[parts.length-1];
-    const newPath=path+'.'+ext;
-    fs.renameSync(path,newPath)
+app.post('/post', uploadMiddleware.single('file'), (request, response) => {
+    const { originalname, path } = request.file;
+    const parts = originalname.split('.');
+    const ext = parts[parts.length - 1];
+    const newPath = path + '.' + ext;
+    fs.renameSync(path, newPath)
     // response.json({files:request.file});
-    const {token}=request.cookies;
-    jwt.verify(token,secret,{},async(err,info)=>{
-        if(err) throw err
-        const {title,summary,content}=request.body;
-        const postDoc=await PostModel.create({
+    const { token } = request.cookies;
+    jwt.verify(token, secret, {}, async (err, info) => {
+        if (err) throw err
+        const { title, summary, content } = request.body;
+        const postDoc = await PostModel.create({
             title,
             summary,
             content,
-            cover:newPath,
-            author:info.id,
+            cover: newPath,
+            author: info.id,
         });
         response.json(postDoc);
     });
@@ -108,11 +108,53 @@ app.post('/post',uploadMiddleware.single('file'),(request,response)=>{
 app.get('/post', async (request, response) => {
     response.json(
         await PostModel.find()
-        .populate('author',['userName'])
-        .sort({createdAt: -1})
-        .limit(20)
+            .populate('author', ['userName'])
+            .sort({ createdAt: -1 })
+            .limit(20)
     );
 });
+
+
+//postInfo / post content route
+app.get('/post/:id', async (request, response) => {
+    const { id } = request.params;
+    // console.log(id);
+    const postDoc = await PostModel.findById(id).populate('author', ['userName']);
+    response.json(postDoc);
+})
+
+//Update post route
+
+app.put('/post', uploadMiddleware.single('file'), async (request, response) => {
+    let newPath = null;
+    if (request.file) {
+        const { originalname, path } = request.file;
+        const parts = originalname.split('.');
+        const ext = parts[parts.length - 1];
+        newPath = path + '.' + ext;
+        fs.renameSync(path, newPath)
+    }
+    const { token } = request.cookies;
+    jwt.verify(token, secret, {}, async (err, info) => {
+        const { id, title, summary, content } = request.body;
+        if (err) throw err
+        const postDoc = await PostModel.findById(id)
+        const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id);
+        if (isAuthor) {
+            await PostModel.findByIdAndUpdate(id, {
+                title,
+                summary,
+                content,
+                cover: newPath ? newPath : postDoc.cover,
+            });
+        }
+        else {
+            return response.status(400).json('You are not the author!!')
+
+        }
+        response.json(postDoc);
+    });
+})
 
 
 //MongoDB Connection
