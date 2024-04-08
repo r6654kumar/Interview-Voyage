@@ -3,10 +3,8 @@
   box-sizing: border-box;
 }
 body {
-  color: black;
-  background: #A7CFDF;
-  background: linear-gradient(to right, #A7CFDF 0%, #f5d7f8 80%);
-
+   color: white;
+   background: linear-gradient(110.6deg, rgb(156, 116, 129) -18.3%, rgb(67, 54, 74) 16.4%, rgb(47, 48, 67) 68.2%, rgb(27, 23, 36) 99.1%);
 }
 .main {
   padding: 10px;
@@ -46,21 +44,28 @@ header a {
 
 .post {
   display: grid;
-  grid-template-columns: 0.3fr 0.3fr;  
+  /* grid-template-columns: 0.3fr 0.3fr;   */
+  grid-template-columns: 1fr;
   gap: 20px;
   margin-bottom: 40px;
   justify-content: center;
+}
+@media screen and (min-width: 768px){
+  .post{
+      grid-template-columns: 0.3fr 0.3fr;  
+
+  }
 }
 
 h2 {
   margin: 0px;
   font-size: 1.5rem;
-  ;
 }
 
 img {
-  width: 30%
+  width: 70%
 }
+
 
 .info {
   margin: 10px 0px;
@@ -71,7 +76,10 @@ img {
 }
 .login,.register{
   max-width: 400px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right:auto;
+  margin-top:170px;
+  margin-bottom: 250px;
 }
 input{
   display: block;
@@ -109,12 +117,73 @@ form.login h1, form.register h1{
 .footerText{
   margin: 0.5px;
 }
-.createpost{
+.createNewpost{
   font-family: "Pacifico", cursive;
   font-weight: 100;
   font-style: normal;
   font-size: 20px;
+  margin-bottom: 20px;
 }
 .quill{
   background-color: white;
+  color:black;
+}
+.titleDiv{
+  text-decoration: none;
+  color:inherit;
+}
+.imageinsidepost{
+  max-width: 500px;
+}
+div.insidepost h1{
+  text-align: center;
+  margin-bottom: 7px;
+}
+.postedattime{
+  text-align: center;
+  display: block;
+  font-size: 0.7rem;
+  margin-bottom: 3px;
+
+}
+.postedbyauthor{
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+.edit-row{
+  text-align: center;
+}
+.edit-btn{
+  background-color: white;
+  color:black;
+  padding: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  border-radius: 18px ;
+  margin-bottom: 20px;
+}
+.w-6h-6{
+  height: 20px; 
+}
+.share-btn,.login-btn,.register-btn,.logout-btn{
+  background-color: white;
+  color:black;
+  padding: 4px;
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 5px ;
+}
+.avatar{
+  height: 35px;
+}
+.displayUser{
+  display: inline-flex;
+  gap:5px;
+  font-family: "Pacifico", cursive;
+  font-weight: 100;
+  font-style: normal;
+  font-size: 18px;
 }
