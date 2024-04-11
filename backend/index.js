@@ -8,11 +8,11 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import cookieParser from 'cookie-parser';
 import multer from "multer";
-import fs from 'fs';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// import fs from 'fs';
+// import { dirname, join } from 'path';
+// import { fileURLToPath } from 'url';
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
 dotenv.config();
 const PORT = process.env.PORT
 const MONGODBURL = process.env.MONGODBURL
@@ -21,7 +21,7 @@ const app = express();
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use(cookieParser());
-app.use('/uploads', express.static(join(__dirname, 'uploads')));
+// app.use('/uploads', express.static(join(__dirname, 'uploads')));
 //Register Route
 app.post('/register', async (request, response) => {
     const { userName, password } = request.body;
@@ -77,16 +77,17 @@ app.post('/logout', (request, response) => {
 
 //Upload Middleware
 
-const uploadMiddleware = multer({ dest: 'uploads/' })
+const uploadMiddleware = multer()
 
 //Create Post route
 app.post('/post', uploadMiddleware.single('file'), (request, response) => {
-    const { originalname, path } = request.file;
+    const { originalname, buffer } = request.file;
     const parts = originalname.split('.');
     const ext = parts[parts.length - 1];
-    const newPath = path + '.' + ext;
-    fs.renameSync(path, newPath)
+    // const newPath = path + '.' + ext;
+    // fs.renameSync(path, newPath)
     // response.json({files:request.file});
+    const base64Image=buffer.toString('base64');
     const { token } = request.cookies;
     jwt.verify(token, secret, {}, async (err, info) => {
         if (err) throw err
@@ -95,7 +96,10 @@ app.post('/post', uploadMiddleware.single('file'), (request, response) => {
             title,
             summary,
             content,
-            cover: newPath,
+            cover: {
+                data: base64Image, 
+                contentType: `image/${ext}`
+            },
             author: info.id,
         });
         response.json(postDoc);
@@ -126,13 +130,18 @@ app.get('/post/:id', async (request, response) => {
 //Update post route
 
 app.put('/post', uploadMiddleware.single('file'), async (request, response) => {
-    let newPath = null;
+    let updatedCoverData={}
     if (request.file) {
-        const { originalname, path } = request.file;
+        const { originalname, buffer } = request.file;
         const parts = originalname.split('.');
         const ext = parts[parts.length - 1];
-        newPath = path + '.' + ext;
-        fs.renameSync(path, newPath)
+        // newPath = path + '.' + ext;
+        // fs.renameSync(path, newPath)
+        const base64Image=buffer.toString('base64');
+        updatedCoverData={
+            data: base64Image, 
+            contentType: `image/${ext}`
+        }
     }
     const { token } = request.cookies;
     jwt.verify(token, secret, {}, async (err, info) => {
@@ -145,7 +154,7 @@ app.put('/post', uploadMiddleware.single('file'), async (request, response) => {
                 title,
                 summary,
                 content,
-                cover: newPath ? newPath : postDoc.cover,
+                cover: Object.keys(updatedCoverData).length ? updatedCoverData : postDoc.cover,
             });
         }
         else {

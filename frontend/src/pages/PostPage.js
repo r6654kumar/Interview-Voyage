@@ -33,7 +33,7 @@ const PostPage = () => {
                 </div>
             )}
             <div className="imageinsidepost">
-                <img src={`http://localhost:4000/${postInfo.cover}`} alt="" />
+                <img src={`data:${postInfo.cover.contentType};base64,${postInfo.cover.data}`} alt="" />
             </div>
             <div className='insidepostcontent' dangerouslySetInnerHTML={{ __html: postInfo.content }} />
         </div>

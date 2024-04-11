@@ -4,7 +4,10 @@ const PostSchema=mongoose.Schema({
     title:String,
     summary:String,
     content:String,
-    cover:String,
+    cover:{
+        data: String,
+        contentType: String,
+    },
     author:{type:Schema.Types.ObjectId, ref:'User'},
     },
    {
