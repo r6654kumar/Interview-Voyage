@@ -45,12 +45,12 @@ const EditPost = () => {
                 Share your Interview experience and help others ace their preperation 👩🏻‍💻
             </div>
             <form onSubmit={updatePost}>
-                <input type="text" placeholder={'Title'}
+                <input type="text" placeholder={'Enter title for exmple: Interview Experience @ Company Name or Interview Experience for @ Position'}
                     value={title}
                     required={true}
                     onChange={ev => setTitle(ev.target.value)}
                 />
-                <input type="summary" placeholder={'Summary'}
+                <input type="summary" placeholder={'Give a summary of your experience such as Positive / Negative Experience , CTC offered, On campus/ Off Campus, Selected/ Not Selected , Position appled for etc..'}
                     value={summary}
                     required={true}
                     onChange={ev => setSummary(ev.target.value)}
@@ -61,6 +61,7 @@ const EditPost = () => {
                 />
                 <ReactQuill className='quill'
                     value={content}
+                    placeholder={'Upload image/logo of the company you interviewed in or any relevant image in the above space provided. Enter your Interview Experience in details here. Warning : DO NOT INCLUDE ANY CONFIDENTIAL DATA OR INVOLVE IN PIRACY.'}
                     onChange={newValue => setContent(newValue)}
                 ></ReactQuill>
                 <button style={{ marginTop: '10px', marginBottom: '170px' }}>Update</button>

@@ -194,3 +194,9 @@ div.insidepost h1{
   font-style: normal;
   font-size: 18px;
 }
+.loader{
+display: flex;
+justify-content: center;
+height: 380px;
+align-items: center;
+}

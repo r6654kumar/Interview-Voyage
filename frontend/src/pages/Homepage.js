@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Post from '../Post'
+import BounceLoader from "react-spinners/BounceLoader";
 const Homepage = () => {
   const [posts, setPosts] = useState([]);
+  const [loading,setLoading]=useState(true);
   useEffect(() => {
     fetch('http://localhost:4000/post').then(response => {
       response.json().then(posts => {
         setPosts(posts);
+        setLoading(false);
       })
     })
   }, []);
@@ -18,9 +21,12 @@ const Homepage = () => {
         </svg>
 
       </div>
-      {posts.length > 0 && posts.map(post => (
-        <Post {...post} />
-      ))}
+      {
+        loading? <div className='loader'><BounceLoader color= {'#ffffff'} loading={loading} /></div>
+          : (<>{posts.length > 0 && posts.map(post => (
+          <Post {...post} />
+        ))}</>)
+      }
     </>
   )
 }
