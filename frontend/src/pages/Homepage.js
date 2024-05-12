@@ -5,7 +5,7 @@ const Homepage = () => {
   const [posts, setPosts] = useState([]);
   const [loading,setLoading]=useState(true);
   useEffect(() => {
-    fetch('http://localhost:4000/post').then(response => {
+    fetch('https://interview-voyage-dkbv.onrender.com/post').then(response => {
       response.json().then(posts => {
         setPosts(posts);
         setLoading(false);
