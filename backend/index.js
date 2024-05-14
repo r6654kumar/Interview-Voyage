@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 4000;
 const MONGODBURL = process.env.MONGODBURL;
 const secret = process.env.secret;
 const app = express();
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cors({ credentials: true, origin: "https://interview-voyage-pearl.vercel.app/" }));
 app.use(express.json());
 app.use(cookieParser());
 // app.use('/uploads', express.static(join(__dirname, 'uploads')));
