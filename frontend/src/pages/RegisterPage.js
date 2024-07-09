@@ -4,7 +4,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState('');
   async function register(ev) {
     ev.preventDefault();
-    const response = await fetch('https://interview-voyage-dkbv.onrender.com/register', {
+    const response = await fetch('https://interview-voyage-backend.onrender.com/register', {
       method: 'POST',
       body: JSON.stringify({ userName, password }),
       headers: { 'Content-type': 'application/json' }

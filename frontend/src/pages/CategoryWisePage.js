@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Post from '../Post'
 import CategoryButtons from '../CategoryButtons'
 import BounceLoader from "react-spinners/BounceLoader";
-const Homepage = () => {
+const CategoryWisePage = (props) => {
   const [posts, setPosts] = useState([]);
   const [loading,setLoading]=useState(true);
   useEffect(() => {
-    fetch(`https://interview-voyage-backend.onrender.com/post/`).then(response => {
+    fetch(`https://interview-voyage-backend.onrender.com/postCategory/${props.category}`).then(response => {
       response.json().then(posts => {
         setPosts(posts);
         setLoading(false);
@@ -32,4 +32,4 @@ const Homepage = () => {
   )
 }
 
-export default Homepage
+export default CategoryWisePage

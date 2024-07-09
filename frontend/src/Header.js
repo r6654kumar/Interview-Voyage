@@ -4,7 +4,7 @@ import { UserContext } from './UserContext';
 const Header = () => {
   const { setUserInfo, userInfo } = useContext(UserContext);
   useEffect(() => {
-    fetch('https://interview-voyage-dkbv.onrender.com/profile', {
+    fetch('https://interview-voyage-backend.onrender.com/profile', {
       credentials: 'include'
     }).then(response => {
       response.json().then(userInfo => {
@@ -13,7 +13,7 @@ const Header = () => {
     })
   }, []);
   function logout() {
-    fetch('https://interview-voyage-dkbv.onrender.com/logout', {
+    fetch('https://interview-voyage-backend.onrender.com/logout', {
       credentials: 'include',
       method: 'POST'
     })

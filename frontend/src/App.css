@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;700&display=swap');
 *{
   box-sizing: border-box;
+  text-decoration: none;
 }
 body {
    color: white;
@@ -14,7 +15,7 @@ body {
 header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 100px;
+  margin-bottom: 40px;
 }
 
 header a {
@@ -71,7 +72,6 @@ img {
   font-weight: 100;
   font-style: normal;
   font-size: 18px;
-  margin-bottom: 70px;
   text-align: center;
 }
 .info {
@@ -199,4 +199,20 @@ display: flex;
 justify-content: center;
 height: 380px;
 align-items: center;
+}
+.categoryMenu{
+  display: flex;
+  justify-content: space-evenly;
+  padding: 30px;
+  margin: 30px;
+}
+.categoryButton{
+  width: 100%;
+  display:block;
+  font-weight: bold;
+  background-color: #e9d9d9;
+  color: #1d1c1c;
+  border-radius: 250px;
+  padding: 20px; 
+  cursor: pointer;
 }

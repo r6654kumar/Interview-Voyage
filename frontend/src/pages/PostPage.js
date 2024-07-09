@@ -11,7 +11,7 @@ const PostPage = () => {
     const { id } = useParams();
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        fetch(`https://interview-voyage-dkbv.onrender.com/post/${id}`)
+        fetch(`https://interview-voyage-backend.onrender.com/post/${id}`)
             .then(response => {
                 response.json().then(postInfo => {
                     setPostInfo(postInfo)

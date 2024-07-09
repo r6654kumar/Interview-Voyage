@@ -10,7 +10,7 @@ const EditPost = () => {
     const [redirect, setRedirect] = useState(false);
     const { id } = useParams();
     useEffect(() => {
-        fetch(`https://interview-voyage-dkbv.onrender.com/post/${id}`)
+        fetch(`https://interview-voyage-backend.onrender.com/post/${id}`)
             .then(response => {
                 response.json().then(postInfo => {
                     setTitle(postInfo.title);
@@ -29,7 +29,7 @@ const EditPost = () => {
         if (files?.[0]) {
             data.set('file', files?.[0]);
         }
-        await fetch('https://interview-voyage-dkbv.onrender.com/post', {
+        await fetch('https://interview-voyage-backend.onrender.com/post', {
             method: 'PUT',
             body: data,
             credentials: 'include'
