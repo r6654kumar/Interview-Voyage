@@ -35,7 +35,8 @@ const Header = () => {
 
               <span>Hey {userName} !</span>
             </div>
-            <Link to='/create'><div className='share-btn'>Share Experience  </div></Link>
+            <Link to='/myExperience'><div className='share-btn'>My Experiences  </div></Link>
+            <Link to='/create'><div className='share-btn'>New Experience  </div></Link>
             <Link to='' onClick={logout}><div className='logout-btn'>Logout</div></Link>
           </>
         )}

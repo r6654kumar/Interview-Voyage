@@ -9,6 +9,7 @@ import {UserContextProvider} from './UserContext.js'
 import PostPage from './pages/PostPage.js';
 import CreatePost from './pages/CreatePost.js';
 import EditPost from './pages/EditPost.js'
+import MyExperience from './pages/MyExperience.js'
 import CategoryWisePage from './pages/CategoryWisePage.js';
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path='/meta_experiences' element={<CategoryWisePage key="Meta"category="Meta"/>} />
         <Route path='/login' element={<LoginPage/>} />
         <Route path='/register' element={<RegisterPage />} />
+        <Route path='/myExperience' element={<MyExperience/>} />
         <Route path='/create' element={<CreatePost />} />
         <Route path='/post/:id' element={<PostPage />} />
         <Route path='/edit/:id' element={<EditPost />} />

@@ -22,12 +22,14 @@ const Homepage = () => {
         </svg>
       </div>
       <CategoryButtons/>
+      <div className="postDivv">
       {
         loading? <div className='loader'><BounceLoader color= {'#ffffff'} loading={loading} /></div>
           : (<>{posts.length > 0 && posts.map(post => (
           <Post {...post} />
         ))}</>)
       }
+      </div>
     </>
   )
 }
