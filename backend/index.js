@@ -116,6 +116,14 @@ app.get("/post", async (request, response) => {
   );
 });
 
+
+//route for divinding into category
+app.get('/post/:keyword', async (request, response) => {
+  const {keyword} = request.params;
+    const results = await PostModel.find({ title: new RegExp(keyword, 'i')}).populate("author", ["userName"]);
+    response.json(results);
+  });
+
 //postInfo / post content route
 app.get("/post/:id", async (request, response) => {
   const { id } = request.params;
