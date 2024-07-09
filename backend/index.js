@@ -170,6 +170,26 @@ app.put("/post", uploadMiddleware.single("file"), async (request, response) => {
   });
 });
 
+
+//route for getting specific user post
+app.get("/userPosts", async (request, response) => {
+  const { token } = request.cookies;
+  jwt.verify(token, secret, {}, async (err,info) => {
+    if (err) {
+      return response.status(401).json({ error: "Unauthorized" });
+    }
+    const { id } = info; 
+    try {
+      const userPosts = await PostModel.find({ "author": id })
+        .populate("author", ["userName"])
+        .sort({ createdAt: -1 });
+      response.json(userPosts);
+    } catch (error) {
+      response.status(500).json({ error: "Failed to fetch user posts" });
+    }
+  });
+});
+
 //MongoDB Connection
 mongoose
   .connect(MONGODBURL)
