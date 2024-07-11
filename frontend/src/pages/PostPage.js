@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
 import { UserContext } from '../UserContext.js';
 import { Link } from 'react-router-dom'
 import BounceLoader from "react-spinners/BounceLoader";
@@ -10,15 +10,34 @@ const PostPage = () => {
     const { userInfo } = useContext(UserContext);
     const { id } = useParams();
     const [loading, setLoading] = useState(true)
+    const [nextPost, setNextPost] = useState(null);
+    const [previousPost, setPreviousPost] = useState(null);
+
     useEffect(() => {
-        fetch(`https://interview-voyage-backend.onrender.com/post/${id}`)
-            .then(response => {
-                response.json().then(postInfo => {
-                    setPostInfo(postInfo)
-                    setLoading(false)
-                })
-            })
-    }, [])
+        fetchPostAndNavigation(id);
+    }, [id]);
+
+    const fetchPostAndNavigation = (postId) => {
+        setLoading(true);
+        fetch(`http://localhost:4000/post/${postId}`)
+            .then(response => response.json())
+            .then(postInfo => {
+                setPostInfo(postInfo);
+                setLoading(false);
+            });
+
+        fetch(`http://localhost:4000/post/${postId}/next`)
+            .then(response => response.json())
+            .then(nextPost => setNextPost(nextPost));
+
+        fetch(`http://localhost:4000/post/${postId}`)
+            .then(response => response.json())
+            .then(previousPost => setPreviousPost(postInfo));
+    };
+
+    const handleNavigation = (newPost) => {
+        fetchPostAndNavigation(newPost._id);
+    };
     // if (!postInfo) return '';
     return (
         <>
@@ -27,6 +46,14 @@ const PostPage = () => {
                     :
                     (
                         <div className="insidepost">
+                            <div className="navigation-buttons">
+                                {previousPost && (
+                                    <button className="pTab" onClick={() => handleNavigation(previousPost)}>Back to Previous</button>
+                                )}
+                                {nextPost && (
+                                    <button className="nTab" onClick={() => handleNavigation(nextPost)}>Read New Experience</button>
+                                )}
+                            </div>
                             <h1>{postInfo.title}</h1>
                             <time className='postedattime'>{new Intl.DateTimeFormat('en-IN', options).format(new Date(postInfo.createdAt))}</time>
                             <div className="postedbyauthor">by {postInfo.author.userName}</div>

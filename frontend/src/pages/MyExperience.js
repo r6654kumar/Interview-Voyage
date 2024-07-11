@@ -7,7 +7,7 @@ const MyExperience = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://interview-voyage-backend.onrender.com/userPosts', {
+        const response = await fetch('http://localhost:4000/userPosts', {
           credentials: 'include',
         });
         if (!response.ok) {

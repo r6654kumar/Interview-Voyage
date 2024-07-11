@@ -190,6 +190,24 @@ app.get("/userPosts", async (request, response) => {
   });
 });
 
+// Route to fetch the next post
+app.get('/post/:id/next', async (req, res) => {
+  try {
+      const currentPost = await PostModel.findById(req.params.id);
+      if (!currentPost) {
+          return res.status(404).send('Current post not found');
+      }
+
+      const nextPost = await PostModel.findOne({ createdAt: { $gt: currentPost.createdAt } }).populate("author", ["userName"]);
+      if (!nextPost) {
+          return res.status(404).send('No next post found');
+      }
+
+      res.json(nextPost);
+  } catch (error) {
+      res.status(500).send(error.message);
+  }
+});
 //MongoDB Connection
 mongoose
   .connect(MONGODBURL)

@@ -8,7 +8,7 @@ const LoginPage = () => {
   const {setUserInfo}=useContext(UserContext);
   async function login(ev){
     ev.preventDefault();
-    const response=await fetch('https://interview-voyage-backend.onrender.com/login', {
+    const response=await fetch('http://localhost:4000/login', {
       method: 'POST',
       body: JSON.stringify({ userName, password }),
       headers: { 'Content-type': 'application/json' },

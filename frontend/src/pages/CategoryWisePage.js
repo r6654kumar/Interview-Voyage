@@ -6,7 +6,7 @@ const CategoryWisePage = (props) => {
   const [posts, setPosts] = useState([]);
   const [loading,setLoading]=useState(true);
   useEffect(() => {
-    fetch(`https://interview-voyage-backend.onrender.com/postCategory/${props.category}`).then(response => {
+    fetch(`http://localhost:4000/postCategory/${props.category}`).then(response => {
       response.json().then(posts => {
         setPosts(posts);
         setLoading(false);

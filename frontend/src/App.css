@@ -222,3 +222,20 @@ align-items: center;
 .postDivv{
   margin:80px;
 }
+.navigation-buttons{
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  margin: 30px;
+  gap:30px;
+}
+.pTab,.nTab{
+  width: 15%;
+  display:block;
+  font-weight: bold;
+  background-color: #e9d9d9;
+  color: #1d1c1c;
+  border-radius: 250px;
+  padding: 20px; 
+  cursor: pointer;
+}
